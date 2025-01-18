@@ -9,7 +9,7 @@ def main():
         print("0 arguments.")
     elif argc == 1:
         print("1 argument:")
-        print("1: {}".format(argc[0]))
+        print("1: {}".format(arguments[0]))
     else:
         print("{} arguments:".format(argc))
         for i, arg in enumerate(arguments, start=1):
