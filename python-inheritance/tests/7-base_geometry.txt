@@ -7,3 +7,6 @@ TypeError:  must be an integer
 >>> bg = BaseGeometry()
 >>> bg.integer_validator("my_int", "")
 TypeError: my_int must be an integer
+
+>>> bg = BaseGeometry()
+>>> bg.integer_validator("", "")
