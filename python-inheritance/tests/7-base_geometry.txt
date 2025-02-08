@@ -1,0 +1,16 @@
+>>> BaseGeometry = __import__('7-base_geometry').BaseGeometry
+
+>>> bg = BaseGeometry()
+>>> bg.integer_validator("", 12)
+
+>>> bg = BaseGeometry()
+>>> bg.integer_validator("", "")
+
+>>> bg = BaseGeometry()
+>>> bg.integer_validator("my_int", "")
+
+>>> bg = BaseGeometry()
+>>> bg.integer_validator("my_int", 12)
+
+>>> bg = BaseGeometry()
+>>> bg.integer_validator("my_int", 12)
