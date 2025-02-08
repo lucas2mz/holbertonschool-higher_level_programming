@@ -2,7 +2,7 @@
 
 >>> bg = BaseGeometry()
 >>> bg.integer_validator("", "")
-TypeError: <unnamed> must be an integer
+TypeError:  must be an integer
 
 >>> bg = BaseGeometry()
 >>> bg.integer_validator("my_int", "")
