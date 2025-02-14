@@ -16,4 +16,4 @@ class Student:
     def to_json(self, attrs=None):
         if attrs is None:
             return self.__dict__
-        return {key: value for key, value in self.__dict__.items() if key in attrs}
+        return {key: V for key, V in self.__dict__.items() if key in attrs}
