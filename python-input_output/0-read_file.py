@@ -3,6 +3,7 @@
 modulo
 """
 
+
 def read_file(filename=""):
     """
     read_file
