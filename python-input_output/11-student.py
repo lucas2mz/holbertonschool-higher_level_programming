@@ -19,4 +19,5 @@ class Student:
         return {key: V for key, V in self.__dict__.items() if key in attrs}
 
     def reload_from_json(self, json):
-        
+        for key, value in json.items():
+            setattr(self, key, value)
