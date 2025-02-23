@@ -28,12 +28,13 @@ def get_user(username):
     else:
         return jsonify({"error": "User not found"}), 404
 
-@app.route("/add_user")
+@app.route("/add_user", methods=["POST"])
 def add_user():
     data = request.get_json()
 
-    if not data:
+    if not data or "username" not in data or "name" not in data or "age" not in data or "city" not in data:
         return jsonify({"error": "Missing required fields"}), 400
+
 
     username = data["username"]
 
