@@ -25,9 +25,9 @@ class Handler(http.server.BaseHTTPRequestHandler):
             self.wfile.write(json.dumps(data).encode('utf-8'))
         elif self.path == '/status':
             self.send_response(200)
-            self.send_header('Content-Type', 'application/json')
+            self.send_header('Content-Type', 'text/plain')
             self.end_headers()
-            self.wfile.write(json.dumps({"status": "ok"}).encode('utf-8'))
+            self.wfile.write(b"OK")
         elif self.path == '/info':
             self.send_response(200)
             self.send_header('Content-Type', 'application/json')
@@ -38,7 +38,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
             self.send_response(404)
             self.send_header('Content-Type', 'application/json')
             self.end_headers()
-            self.wfile.write(json.dumps({"error": "Endpoint not found"}).encode('utf-8'))
+            self.wfile.write(json.dumps({"message": "Not Found"}).encode('utf-8'))
 
 
 with socketserver.TCPServer(("", PORT), Handler) as httpd:
