@@ -8,6 +8,10 @@ users = {
     "jane": {"name": "Jane", "age": 28, "city": "Los Angeles"}
 }
 
+def clear():
+    global users
+    users = {}
+
 @app.route("/")
 def home():
     return "Welcome to the Flask API!"
@@ -34,7 +38,6 @@ def add_user():
 
     if not data or "username" not in data or "name" not in data or "age" not in data or "city" not in data:
         return jsonify({"error": "Missing required fields"}), 400
-
 
     username = data["username"]
 
