@@ -5,12 +5,9 @@ from flask import Flask, jsonify, request
 app = Flask(__name__)
 
 users = {
-    "jane": {"name": "Jane", "age": 28, "city": "Los Angeles"}
+    "jane": {"username": "jane", "name": "Jane", "age": 28, "city": "Los Angeles"},
+    "john": {"username": "john", "name": "John", "age": 30, "city": "New York"}
 }
-
-def clear():
-    global users
-    users = {}
 
 @app.route("/")
 def home():
@@ -18,11 +15,11 @@ def home():
 
 @app.route("/data")
 def data():
-    return jsonify(list(users.values()))
+    return jsonify(list(users.keys()))
 
 @app.route("/status")
 def status():
-    return jsonify({"status": "OK"}), 200
+    return "OK"
 
 @app.route("/users/<username>")
 def get_user(username):
@@ -36,15 +33,16 @@ def get_user(username):
 def add_user():
     data = request.get_json()
 
-    if not data or "username" not in data or "name" not in data or "age" not in data or "city" not in data:
-        return jsonify({"error": "Missing required fields"}), 400
+    if "username" not in data:
+        return jsonify({"error": "Username is required"}), 400
 
     username = data["username"]
 
     if username in users:
-        return jsonify({"error": "User already exists"}), 400
+        return jsonify({"error": "Username already exists"}), 400
 
     users[username] = {
+        "username": data["username"],
         "name": data["name"],
         "age": data["age"],
         "city": data["city"]
