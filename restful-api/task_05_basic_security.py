@@ -4,6 +4,7 @@ from flask import Flask, jsonify
 from flask_httpauth import HTTPBasicAuth
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from http import request
 
 app = Flask(__name__)
 auth = HTTPBasicAuth()
@@ -21,7 +22,7 @@ def verify_password(username, password):
         return username
     return None
 
-@api.route('/login', methods=['POST'])
+@app.route('/login', methods=['POST'])
 def login():
     data = request.json
     username = data.get("username")
@@ -30,7 +31,7 @@ def login():
     if username in user and check_password_hash(users[username]["password"], password):
         
 
-@api.route('/protected')
+@app.route('/protected')
 @auth.login_required
 def protected_route():
     return jsonify({"message": "Hello, this route is protected!"})
