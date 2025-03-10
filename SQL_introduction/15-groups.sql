@@ -1,0 +1,5 @@
+-- LIST THE NUMBER OF RECORDS WITH THE SAME SCORE
+SELECT score, COUNT(*) AS number
+FROM second_table
+GROUP BY score
+ORDER BY number DESC;
