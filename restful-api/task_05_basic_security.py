@@ -42,7 +42,7 @@ def basic_protected():
 
 @app.route('/login', methods=['POST'])
 def login():
-    data = request.json
+    data = request.get_json()
     username = data.get("username")
     password = data.get("password")
     user = users.get(username)
@@ -51,7 +51,7 @@ def login():
         return jsonify({"error": "Invalid Credentials"}), 401
         
     access_token = create_access_token(identity={"username": username, "role": user["role"]})
-    return jsonify(access_token=access_token)
+    return jsonify({"access_token": access_token})
 
 @app.route('/jwt-protected')
 @jwt_required()
