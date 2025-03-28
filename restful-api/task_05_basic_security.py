@@ -1,19 +1,28 @@
 #!/usr/bin/python3
 
+
 from flask import Flask, jsonify, request
 from flask_httpauth import HTTPBasicAuth
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from werkzeug.security import generate_password_hash, check_password_hash
 
-app = Flask(__name__)
-auth = HTTPBasicAuth()
 
+app = Flask(__name__)
 app.config['JWT_SECRET_KEY'] = 'supersecretkey'
+auth = HTTPBasicAuth()
 jwt = JWTManager(app)
 
 users = {
-    "user1": {"username": "user1", "password": generate_password_hash("password"), "role": "user"},
-    "admin1": {"username": "admin1", "password": generate_password_hash("password"), "role": "admin"}
+    "user1": {
+        "username": "user1", 
+        "password": generate_password_hash("password"), 
+        "role": "user"
+    },
+    "admin1": {
+        "username": "admin1", 
+        "password": generate_password_hash("password"), 
+        "role": "admin"
+    }
 }
 
 @auth.verify_password
@@ -26,7 +35,7 @@ def verify_password(username, password):
 def index():
     return "hello world!"
 
-@app.route('/basic-protected', methods=['GET'])
+@app.route('/basic-protected')
 @auth.login_required
 def basic_protected():
     return "Basic Auth: Access Granted"
@@ -39,7 +48,7 @@ def login():
     user = users.get(username)
 
     if not user or not check_password_hash(user['password'], password):
-        return jsonify({"msg": "Bad username or password"}), 401
+        return jsonify({"error": "Invalid Credentials"}), 401
         
     access_token = create_access_token(identity={"username": username, "role": user["role"]})
     return jsonify(access_token=access_token)
@@ -59,8 +68,7 @@ def admin_only():
     current_user = get_jwt_identity()
     if current_user['role'] != 'admin':
         return jsonify({"error": "Admin access required"}), 403
-    else:
-        return "Admin Access: Granted"
+    return "Admin Access: Granted"
     
 @jwt.unauthorized_loader
 def handle_unauthorized_error(err):
