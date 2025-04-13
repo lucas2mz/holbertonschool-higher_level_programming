@@ -1,0 +1,3 @@
+document.querySelector('#updated_header').addEventListener('click', () => {
+  document.querySelector('header').textContent = 'New Header!!!';
+}); 
